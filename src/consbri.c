@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                 fprintf(stderr, "failed.\n");
 
         free(backlight);
-        return EXIT_FAILURE;
+        return EXIT_SUCCESS;
 }
 
 
