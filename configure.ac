@@ -8,5 +8,5 @@ AM_INIT_AUTOMAKE([1.11 foreign])
 AC_CONFIG_SRCDIR([src/consbri.c])
 AC_CHECK_HEADERS
 AC_CANONICAL_HOST
-AC_CONFIG_FILE([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
