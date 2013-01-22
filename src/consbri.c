@@ -100,7 +100,7 @@ char *get_backlight_class()
 backlight_cleanup:
         if (NULL != dirp && 0 != closedir(dirp))
                 warn("failed to close directory");
-        if (strlen(backlight) == 0) {
+        if (backlight == NULL || strlen(backlight) == 0) {
                 free(backlight);
                 backlight = NULL;
         }
