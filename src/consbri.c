@@ -155,7 +155,7 @@ int write_brightness(char *backlight, double brightness)
                 return -1;
         }
 
-        fprintf(stderr, "[-] %s -> brightness(%s)\n", fname, buf);
+        snprintf(buf, MAX_BRIGHTNESS_SIZE, "%u", (unsigned)brightness);
         if (strlen(buf) != fwrite(buf, sizeof(buf[0]),
                                   strlen(buf), brightness_file)) {
                 warn("failed to write brightness");
