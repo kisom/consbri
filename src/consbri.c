@@ -49,8 +49,13 @@ int main(int argc, char *argv[])
                 return EXIT_FAILURE;
         }
 
-        backlight = get_backlight_class();
         pct = strtod(argv[1], NULL) / 100.0;
+        if (pct < 0 || pct > 100) {
+                fprintf(stderr, "[!] invalid brightness setting.\n");
+                return EXIT_FAILURE;
+        }
+
+        backlight = get_backlight_class();
         bright = get_max_brightness(backlight);
         if (write_brightness(backlight, (pct * bright)))
                 fprintf(stderr, "failed.\n");

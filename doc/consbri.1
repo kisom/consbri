@@ -1,33 +1,43 @@
 .Dd $Mdocdate$
-.Dt PROGNAME section
+.Dt CONSBRI 1
 .Os
 .Sh NAME
-.Nm progname
-.Nd one line about what it does
+.Nm consbri
+.Nd set LCD brightness from command line
 .Sh SYNOPSIS
 .Nm
-.Op Fl options
-.Ar
+.Ar percentage
 .Sh DESCRIPTION
-.\" .Sh RETURN VALUES
-.\" For sections 2, 3, & 9 only.
-.\" .Sh ENVIRONMENT
-.\" For sections 1, 6, 7, & 8 only.
-.\" .Sh FILES
-.\" .Sh EXIT STATUS
-.\" For sections 1, 6, & 8 only.
-.\" .Sh EXAMPLES
-.\" .Sh DIAGNOSTICS
-.\" For sections 1, 4, 6, 7, & 8 only.
-.\" .Sh ERRORS
-.\" For sections 2, 3, & 9 only.
-.\" .Sh SEE ALSO
-.Sh STANDARDS
 .Nm
-conforms to
-.St ansiC .
-.\" .Sh HISTORY
+takes a brightness setting as a percentage.
+.Sh FILES
+.Nm
+operates on the sysfs filesystem; if your LCD isn't present in sysfs,
+this program will not work.
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Set the LCD to half-brightness:
+.Dl consbri 50
+Turn off the LCD:
+.Dl consbri 0
+Set the LCD to full brightness:
+.Dl consbri 100
+.Sh DIAGNOSTICS
+If
+.Nm
+fails, it might be for one of the following reasons:
+.Bl -bullet -width .Ds
+.It Foo
+.It Bar
+.El
+.\" .Sh SEE ALSO
 .Sh AUTHORS
+.Nm
+was written by
+.An Kyle Isom Aq Mt kyle@tyrfingr.is .
 .Sh CAVEATS
+As this relies on the Linux-specific sysfs, this will only work on Linux
+systems.
 .Sh BUGS
-
+Please report bugs to the author.
