@@ -28,10 +28,21 @@ If
 .Nm
 fails, it might be for one of the following reasons:
 .Bl -bullet -width .Ds
-.It Foo
-.It Bar
+.It
+No percentage specified, or a percentage is given outside the accepted
+range (0-100).
+.It
+.Nm
+cannot access the appropriate sysfs directory: for example, the backlight
+might not be in the expected place, or there might not be a sysfs backlight
+control.
+.It
+.Nm
+failed to allocate memory for one of the internal buffers.
+.It
+.Nm
+doesn't have the appropriate permissions to access the backlight files.
 .El
-.\" .Sh SEE ALSO
 .Sh AUTHORS
 .Nm
 was written by
