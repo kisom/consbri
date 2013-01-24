@@ -6,10 +6,13 @@
 .Nd set LCD brightness from command line
 .Sh SYNOPSIS
 .Nm
-.Ar percentage
+.Op Ar percentage
 .Sh DESCRIPTION
 .Nm
-takes a brightness setting as a percentage.
+takes a brightness setting as a percentage, and sets the LCD brightness
+to that level. If no percentage is given,
+.Nm
+returns the current brightness percentage.
 .Sh FILES
 .Nm
 operates on the sysfs filesystem; if your LCD isn't present in sysfs,
@@ -29,8 +32,7 @@ If
 fails, it might be for one of the following reasons:
 .Bl -bullet -width .Ds
 .It
-No percentage specified, or a percentage is given outside the accepted
-range (0-100).
+The percentage given is outside the accepted range (0-100).
 .It
 .Nm
 cannot access the appropriate sysfs directory: for example, the backlight

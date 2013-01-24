@@ -32,6 +32,7 @@
 static char     *get_backlight_class(void);
 static double    get_max_brightness(char *);
 static int       write_brightness(char *, double);
+static double    get_brightness(char *);
 
 
 /*
@@ -44,21 +45,22 @@ int main(int argc, char *argv[])
         double   pct = 0.0;
         double   bright = 0.0;
 
-        if (1 == argc) {
-                fprintf(stderr, "[!] no percentage specified\n");
-                return EXIT_FAILURE;
-        }
-
-        pct = strtod(argv[1], NULL) / 100.0;
-        if (pct < 0 || pct > 100) {
-                fprintf(stderr, "[!] invalid brightness setting.\n");
-                return EXIT_FAILURE;
-        }
-
         backlight = get_backlight_class();
         bright = get_max_brightness(backlight);
-        if (write_brightness(backlight, (pct * bright)))
-                fprintf(stderr, "failed.\n");
+        if (1 == argc) {
+                double   cur = 0.0;
+                cur = get_brightness(backlight);
+                pct = (cur / bright) * 100.0;
+                printf("backlight is at %0.0f%% brightness.\n", pct);
+        } else {
+                pct = strtod(argv[1], NULL) / 100.0;
+                if (pct < 0 || pct > 100) {
+                        fprintf(stderr, "[!] invalid brightness setting.\n");
+                        return EXIT_FAILURE;
+                }
+                if (write_brightness(backlight, (pct * bright)))
+                        fprintf(stderr, "failed.\n");
+        }
 
         free(backlight);
         return EXIT_SUCCESS;
@@ -173,3 +175,35 @@ int write_brightness(char *backlight, double brightness)
         }
         return retval;
 }
+
+
+/*
+ * get_brightness returns the current brightness level
+ */
+double get_brightness(char *backlight)
+{
+        double   max_bright = 0.0;
+        char     buf[MAX_BRIGHTNESS_SIZE + 1];
+        char     fname[PATH_MAX + 1];
+        FILE    *max_bright_file = NULL;
+
+        memset(buf, 0x0, MAX_BRIGHTNESS_SIZE + 1);
+        memset(fname, 0x0, PATH_MAX + 1);
+        snprintf(fname, PATH_MAX, "%s/brightness", backlight);
+
+        max_bright_file = fopen(fname, "r");
+        if (NULL == max_bright_file || 0 != ferror(max_bright_file))
+                return max_bright;
+
+        if (0 == fread(buf, sizeof(buf[0]), MAX_BRIGHTNESS_SIZE,
+                       max_bright_file))
+                warn("failed to read max brightness");
+        else
+                max_bright = strtod(buf, NULL);
+
+        if (0 != fclose(max_bright_file))
+                warn("failed to close max_brightness file");
+        return max_bright;
+}
+
+
